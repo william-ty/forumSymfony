@@ -1,0 +1,92 @@
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+#wrapper {
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    width: auto;
+    height: 100%;
+    margin-top: 2em;
+}
+
+.content-wrap {
+    width: 95%;
+}
+
+.center-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10em;
+    /* justify-content: center; */
+    align-items: center;
+}
+
+.center-form label, .center-form input {
+    width: 100%;
+}
+
+.center-form label {
+    margin-top: 0.5em;
+}
+
+.txt-ctr {
+    text-align: center;
+}
+
+.center-form form button {
+    /* width: 80%; */
+    text-align: center;
+    margin-top: 1em;
+}
+
+.form-btn-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+table {
+    width: 100%;
+}
+
+table tr {
+    height: 3em;
+}
+
+table td {
+    border-bottom: 1px rgba(255, 255, 255, 0.452) solid;
+    border-top: 1px rgba(255, 255, 255, 0.452) solid;
+    background-color: rgba(140, 156, 177, 0.37);
+}
+
+.topic-head {
+    display: flex;
+    width: 100%;
+}
+.btn{
+    margin-left: 1em;
+    height: 2.5em;
+    align-self: center;
+    font-size: 0.9em;
+}
+.flex-box{
+    display: flex;
+    width: 100%;
+}
+.count-dot{
+    background-color: grey;
+    width: 2.5em;
+    margin-left: 0.5em;
+    text-align: center;
+    border-radius: 250%;
+    height: 100%;
+    align-self: center;
+}

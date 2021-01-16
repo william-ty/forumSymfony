@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{% if editMode %}
+		<h1>Modifier le sujet</h1>
+	{% else %}
+		<h1>Nouveau sujet</h1>
+	{% endif %}
+{% endblock %}
+
+{% block body %}
+	<div class="content-wrap">
+
+		{% if editMode %}
+			<h1>Modifier le sujet</h1>
+		{% else %}
+			<h1>Nouveau sujet</h1>
+		{% endif %}
+
+		<a href="{{ path('topics') }}">
+			Retour à la liste des sujets
+		</a>
+
+		{{ form_start(topicForm) }}
+		{{ form_row(topicForm.title) }}
+		<button type="submit" class="btn">Créer</button>
+		{{ form_end(topicForm) }}
+	</div>
+{% endblock %}

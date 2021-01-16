@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des sujets
+{% endblock %}
+
+{% block body %}
+	<div class="content-wrap">
+		<h1>Forum</h1>
+
+		<div>
+			<a href="{{ path('topics_create') }}">&#x2b; Nouveau sujet </a>
+		</div>
+
+		<table>
+			<thead>
+				<tr>
+					<th>Sujet</th>
+					<th>Auteur</th>
+					<th>Date de création</th>
+					<th class="txt-ctr">Messages</th>
+					<th class="txt-ctr">Statut</th>
+					<th class="txt-ctr">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for topic in topics %}
+					<tr>
+						<td>
+							<div>
+								<a href="{{ path('topic_show', {'id':topic.id}) }}">{{ topic.title }}</a>
+							</div>
+						</td>
+						<td>
+							<div>{{ topic.getUser().getPseudo() }}</div>
+						</td>
+						<td>
+							<div>{{ topic.dateCreated | date("m/d/Y H:i") }}</div>
+						</td>
+						<td class="txt-ctr">{{ topic.messages | length }}</td>
+						<td class="txt-ctr">
+							{% if topic.locked %}
+								<i class="fas fa-lock"></i>
+							{% else %}
+								<i class="fas fa-lock-open"></i>
+							{% endif %}
+						</td>
+						<td class="txt-ctr">
+							{% if (app.user and app.user.id == topic.user.id) or (app.user.isAdmin)  %}
+								{% if topic.locked %}
+									<a class="lock" href="{{ path('topic_lock', {'id':topic.id}) }}">
+										<i class="fas fa-unlock"></i>
+									</a>
+								{% else %}
+									<a class="lock" href="{{ path('topic_lock', {'id':topic.id}) }}">
+										<i class="fas fa-user-lock"></i>	
+									</a>
+								{% endif %}
+							<a href="{{ path('topic_edit', {'id':topic.id}) }}">
+								<i class="fas fa-edit"></i>
+							</a>
+							<a href="{{ path('topic_delete', {'id':topic.id}) }}">
+								<i class="fas fa-trash"></i>	
+							</a>
+							{% endif %}
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+{% endblock %}
+{% block javascripts %}
+	<script>
+		let lockButtons = document.querySelectorAll(".lock")
+
+		lockButtons.forEach(function(lock) {
+
+			lock.addEventListener("click", (e) => {
+
+				e.preventDefault()
+				let url = lock.getAttribute("href")
+
+				fetch(url) //promise - je te promets que le serveur a été atteint
+					.then(response => response.json)
+					// si la promesse est tenue, je te promet que je convertis tt ça en JSON
+					.then(json => {
+						console.log(json)
+					})
+					//si la promesse est tenue, enfin, je peux manipuler la réponse dans le format demandé
+			})
+		})
+
+
+		{# for(index in lockButtons){
+			console.log(index)
+			lockButtons[index].addEventListener("click", (e) => {
+				e.preventDefault()
+			})
+		} #}
+	</script>
+{% endblock %}

@@ -1,0 +1,2 @@
+# formicka
+Symfony project

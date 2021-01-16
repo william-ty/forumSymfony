@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Bienvenue!
+			{% endblock %}
+		</title>
+		{% block stylesheets %}
+			<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+			<link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
+			<link rel="stylesheet" href="{{ asset('/css/style.css') }}">
+		{% endblock %}
+	</head>
+	<body>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+			<a class="navbar-brand" href="#">FORUM</a>
+			<div class="collapse navbar-collapse" id="navbarColor01">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active">
+						{% if app.user %}
+							<a class="nav-link" href="{{ path('topics') }}">Accueil</a>
+							<span class="sr-only">(current)</span>
+						{% else %}
+							<a class="nav-link" href="{{ path('home') }}">Accueil</a>
+							<span class="sr-only">(current)</span>
+						{% endif %}
+					</li>
+					<li>
+						{# {% if app.user.isAdmin %} #}
+							<a class="nav-link" href="{{ path('topics') }}">Gestion des utilisateurs</a>
+						{# {% endif %} #}
+					</li>
+				</ul>
+				<ul class="navbar-nav">
+					{% if app.user %}
+						<span class="nav-link active">Bienvenue
+							<strong>{{ app.user.username }}</strong>
+						</span>
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
+						</li>
+					{% else %}
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('app_register') }}">Inscription</a>
+						</li>
+					{% endif %}
+
+				</ul>
+			</div>
+		</nav>
+		<div id="wrapper">
+			{% block body %}{% endblock %}
+		</div>
+			{% block javascripts %}
+				<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+				<script>
+					tinymce.init({
+						selector: 'textarea',
+						menubar: false,
+						plugins: "link image code",
+						toolbar: 'undo redo | styleselect | forecolor | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | link image | code',
+						toolbar_location: 'bottom'
+					});
+				</script>
+			{% endblock %}
+		</body>
+	</html>

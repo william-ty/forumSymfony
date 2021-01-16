@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ topic.title }}
+{% endblock %}
+
+{% block body %}
+	<div class="content-wrap">
+		<div class="topic-head">
+			<h2>{{ topic.title }}</h2>
+			<button type="button" class="btn btn-danger">Marquer comme résolu</button>
+			<button type="button" class="btn btn-success">Fermer le sujet</button>
+		</div>
+		<p>Par
+			<strong>{{ topic.getUser() }}</strong>
+			le
+			{{ topic.dateCreated | date("m/d/Y à H:i") }}</p>
+		<div>
+			<a href="{{ path('topics') }}">
+				&#60; Retour à la liste des sujets
+			</a>
+		</div>
+		<div class="flex-box">
+			<h4>Messages</h4><div class="count-dot">{{ topic.messages | length }}</div>
+		</div>
+		<table>
+			<thead>
+				<tr>
+					<th>Auteur</th>
+					<th>Message</th>
+					<th class="txt-ctr">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for message in topic.messages %}
+					{# {% if app.user %}{% endif %} #}
+					<tr class="">
+						<td>
+							<div>
+								<p>{{ message.getUser().getPseudo() }}</p>
+								<p>{{ message.dateCreated | date("m/d/Y H:i") }}</p>
+								<p>Messages:
+									{{ message.user.topics | length }}</p>
+								<p>Sujets:
+									{{ message.user.messages | length }}</p>
+							</div>
+						</td>
+						<td>
+							<div>{{ message.text }}</div>
+						</td>
+						<td class="txt-ctr">
+							{% if (app.user and app.user.id == message.user.id) or (app.user.isAdmin)  %}
+								<a href="{{ path('message_edit', {'id':message.id}) }}">
+									<i class="fas fa-edit"></i>
+								</a>
+								<a href="{{ path('message_delete', {'id':message.id}) }}">
+									<i class="fas fa-trash"></i>
+								</a>
+							{% endif %}
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+		{% if topic.locked %}
+			<p>Sujet verrouillé par un administrateur</p>
+		{% else %}
+			<div>
+				<p>Nouveau message</p>
+
+				{{ form_start(messageForm, {'attr': {'novalidate': 'novalidate'}}) }}
+					{{ form_row(messageForm.text) | raw }}
+					<button type="submit" class="btn">Ajouter</button>
+				{{ form_end(messageForm) }}
+			</div>
+		{% endif %}
+
+
+	</div>
+{% endblock %}

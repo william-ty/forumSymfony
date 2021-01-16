@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{% if editMode %}
+		<h1>Modifier le message</h1>
+	{% else %}
+		<h1>Nouveau message</h1>
+	{% endif %}
+{% endblock %}
+
+{% block body %}
+
+	{% if editMode %}
+		<h1>Modifier le message</h1>
+	{% else %}
+		<h1>Nouveau message</h1>
+	{% endif %}
+
+	<a href="{{ path('topic_show', {'id':topic.id}) }}">
+		Retour à la liste des messages
+	</a>
+
+	{{ form_start(messageForm) }}
+	{{ form_row(messageForm.text) }}
+	<button type="submit" class="btn">Créer</button>
+	{{ form_end(messageForm) }}
+{% endblock %}
